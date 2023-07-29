@@ -11,10 +11,10 @@
 
 #include <string>
 
-// The handler for config reload.
-// When reload callback, the config is updated yet.
+// The handler for config reload.用于配置重新加载的处理程序。
+// When reload callback, the config is updated yet.当重新加载回调时，配置尚未更新。
 //
-// Features not support reload,
+// Features not support reload,功能不支持重新加载，
 // @see: https://ossrs.net/lts/zh-cn/docs/v4/doc/reload#notsupportedfeatures
 class ISrsReloadHandler
 {

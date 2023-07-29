@@ -17,6 +17,7 @@
 
 // The st thread context, get_id will get the st-thread id,
 // which identify the client.
+// st线程上下文，get_id将得到标识客户端的st线程id。
 class SrsThreadContext : public ISrsContext
 {
 private:
@@ -33,9 +34,11 @@ private:
 };
 
 // Set the context id of specified thread, not self.
+// 设置指定线程的上下文id，而不是设置自身。
 extern const SrsContextId& srs_context_set_cid_of(srs_thread_t trd, const SrsContextId& v);
 
 // The context restore stores the context and restore it when done.
+// 上下文恢复存储上下文，并在完成时进行恢复。
 // Usage:
 //      SrsContextRestore(_srs_context->get_id());
 #define SrsContextRestore(cid) impl_SrsContextRestore _context_restore_instance(cid)
@@ -49,6 +52,7 @@ public:
 };
 
 // The basic console log, which write log to console.
+// 基本的控制台日志，它将日志写入控制台。
 class SrsConsoleLog : public ISrsLog
 {
 private:
@@ -66,7 +70,7 @@ public:
     virtual void log(SrsLogLevel level, const char* tag, const SrsContextId& context_id, const char* fmt, va_list args);
 };
 
-// Generate the log header.
+// Generate the log header. 生成日志标题。
 // @param dangerous Whether log is warning or error, log the errno if true.
 // @param utc Whether use UTC time format in the log header.
 // @param psize Output the actual header size.

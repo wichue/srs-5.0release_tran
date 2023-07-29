@@ -76,7 +76,7 @@ SrsServer* _srs_server = NULL;
 // Whether setup config by environment variables, see https://github.com/ossrs/srs/issues/2277
 bool _srs_config_by_env = false;
 
-// The binary name of SRS.
+// The binary name of SRS.  SRS可执行程序名称
 const char* _srs_binary = NULL;
 
 // Free global data, for address sanitizer.
@@ -87,13 +87,14 @@ extern void asan_report_callback(const char* str);
 #endif
 
 /**
- * main entrance.
+ * main entrance.主要处理函数
  */
 srs_error_t do_main(int argc, char** argv, char** envp)
 {
     srs_error_t err = srs_success;
 
     // TODO: Might fail if change working directory.
+    // 如果您更改了工作目录，则可能会失败。
     _srs_binary = argv[0];
 
     // For sanitizer on macOS, to avoid the warning on startup.
@@ -104,6 +105,7 @@ srs_error_t do_main(int argc, char** argv, char** envp)
 #endif
 
     // Initialize global and thread-local variables.
+    // 初始化全局变量和线程局部变量。
     if ((err = srs_global_initialize()) != srs_success) {
         return srs_error_wrap(err, "global init");
     }
@@ -113,9 +115,10 @@ srs_error_t do_main(int argc, char** argv, char** envp)
     }
 
     // For background context id.
+    // 设置上下文ID
     _srs_context->set_id(_srs_context->generate_id());
 
-    // TODO: support both little and big endian.
+    // TODO: support both little and big endian.同时支持大端和小端
     srs_assert(srs_is_little_endian());
     
     // for gperf gmp or gcp,
@@ -250,7 +253,7 @@ srs_error_t do_main(int argc, char** argv, char** envp)
 
     return err;
 }
-
+// 程序入口
 int main(int argc, char** argv, char** envp)
 {
     srs_error_t err = do_main(argc, argv, envp);

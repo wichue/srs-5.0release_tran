@@ -304,19 +304,19 @@ srs_error_t srs_global_initialize()
 {
     srs_error_t err = srs_success;
 
-    // Root global objects.
+    // Root global objects.根全局对象。
     _srs_log = new SrsFileLog();
     _srs_context = new SrsThreadContext();
     _srs_config = new SrsConfig();
 
-    // The clock wall object.
+    // The clock wall object.时钟墙对象。
     _srs_clock = new SrsWallClock();
 
     // The pps cids depends by st init.
     _srs_pps_cids_get = new SrsPps();
     _srs_pps_cids_set = new SrsPps();
 
-    // The global objects which depends on ST.
+    // The global objects which depends on ST.依赖于ST的全局对象。
     _srs_hybrid = new SrsHybridServer();
     _srs_sources = new SrsLiveSourceManager();
     _srs_stages = new SrsStageManager();
@@ -338,7 +338,7 @@ srs_error_t srs_global_initialize()
 #endif
     _srs_gc = new SrsLazySweepGc();
 
-    // Initialize global pps, which depends on _srs_clock
+    // Initialize global pps, which depends on _srs_clock   初始化全局pps，这依赖于_srs_clock
     _srs_pps_ids = new SrsPps();
     _srs_pps_fids = new SrsPps();
     _srs_pps_fids_level0 = new SrsPps();

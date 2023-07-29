@@ -52,9 +52,11 @@ private:
 extern SrsCircuitBreaker* _srs_circuit_breaker;
 
 // Initialize global shared variables cross all threads.
+// 初始化全局共享变量是跨所有线程的。
 extern srs_error_t srs_global_initialize();
 
 // The thread mutex wrapper, without error.
+// 线程互斥锁包装器，没有错误。
 class SrsThreadMutex
 {
 private:
@@ -68,7 +70,7 @@ public:
     void unlock();
 };
 
-// The thread mutex locker.
+// The thread mutex locker. 线程互斥器。
 // TODO: FIXME: Rename _SRS to _srs
 #define SrsThreadLocker(instance) \
     impl__SrsThreadLocker _SRS_free_##instance(instance)
@@ -87,7 +89,7 @@ public:
     }
 };
 
-// The information for a thread.
+// The information for a thread.    为一个线程提供的信息。
 class SrsThreadEntry
 {
 public:
@@ -100,9 +102,9 @@ public:
     // @see https://man7.org/linux/man-pages/man2/gettid.2.html
     pid_t tid;
 public:
-    // The thread object.
+    // The thread object.线程对象
     pthread_t trd;
-    // The exit error of thread.
+    // The exit error of thread.线程的退出错误。
     srs_error_t err;
 public:
     SrsThreadEntry();
@@ -111,6 +113,7 @@ public:
 
 // Allocate a(or almost) fixed thread poll to execute tasks,
 // so that we can take the advantage of multiple CPUs.
+// 分配一个（或几乎）固定线程轮询来执行任务，这样我们就可以利用多个cpu。
 class SrsThreadPool
 {
 private:
@@ -121,6 +124,7 @@ private:
     std::vector<SrsThreadEntry*> threads_;
 private:
     // The hybrid server entry, the cpu percent used for circuit breaker.
+    // 混合服务器条目，用于断路器的cpu百分比。
     SrsThreadEntry* hybrid_;
     std::vector<SrsThreadEntry*> hybrids_;
 private:

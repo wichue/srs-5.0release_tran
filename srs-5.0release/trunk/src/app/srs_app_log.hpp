@@ -28,21 +28,24 @@ class SrsThreadMutex;
 // Use memory/disk cache and donot flush when write log.
 // it's ok to use it without config, which will log to console, and default trace level.
 // when you want to use different level, override this classs, set the protected _level.
+//使用内存/磁盘缓存，并且在写入日志时不要刷新。
+//可以使用它，它将登录到控制台和默认跟踪级别。
+//当您想使用不同的级别时，覆盖此类，设置受保护的级别。
 class SrsFileLog : public ISrsLog, public ISrsReloadHandler
 {
 private:
-    // Defined in SrsLogLevel.
+    // Defined in SrsLogLevel.//日志级别
     SrsLogLevel level_;
 private:
     char* log_data;
-    // Log to file if specified srs_log_file
+    // Log to file if specified srs_log_file    如果指定srs_log_file，日志到文件
     int fd;
-    // Whether log to file tank
+    // Whether log to file tank 是否记录到文件箱
     bool log_to_file_tank;
     // Whether use utc time.
     bool utc;
     // TODO: FIXME: use macro define like SRS_MULTI_THREAD_LOG to switch enable log mutex or not.
-    // Mutex for multithread log.
+    // Mutex for multithread log.多线程日志的互斥锁。
     SrsThreadMutex* mutex_;
 public:
     SrsFileLog();
@@ -50,7 +53,7 @@ public:
 // Interface ISrsLog
 public:
     virtual srs_error_t initialize();
-    virtual void reopen();
+    virtual void reopen();//重新打开日志文件
     virtual void log(SrsLogLevel level, const char* tag, const SrsContextId& context_id, const char* fmt, va_list args);
 private:
     virtual void write_log(int& fd, char* str_log, int size, int level);

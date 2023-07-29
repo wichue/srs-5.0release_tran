@@ -20,10 +20,10 @@
 #include <srs_kernel_utility.hpp>
 #include <srs_app_threads.hpp>
 
-// the max size of a line of log.
+// the max size of a line of log.日志行的最大大小。
 #define LOG_MAX_SIZE 8192
 
-// the tail append to each log.
+// the tail append to each log.尾部会附加到每个日志中。
 #define LOG_TAIL '\n'
 // reserved for the end of log data, it must be strlen(LOG_TAIL)
 #define LOG_TAIL_SIZE 1
@@ -101,7 +101,7 @@ void SrsFileLog::log(SrsLogLevel level, const char* tag, const SrsContextId& con
         return;
     }
 
-    // Something not expected, drop the log.
+    // Something not expected, drop the log. 出现异常情况，丢弃日志
     int r0 = vsnprintf(log_data + size, LOG_MAX_SIZE - size, fmt, args);
     if (r0 <= 0 || r0 >= LOG_MAX_SIZE - size) {
         return;
@@ -124,15 +124,15 @@ void SrsFileLog::log(SrsLogLevel level, const char* tag, const SrsContextId& con
 
 void SrsFileLog::write_log(int& fd, char *str_log, int size, int level)
 {
-    // ensure the tail and EOF of string
+    // ensure the tail and EOF of string    确保尾部有足够的长度添加\n和EOF
     //      LOG_TAIL_SIZE for the TAIL char.
     //      1 for the last char(0).
     size = srs_min(LOG_MAX_SIZE - 1 - LOG_TAIL_SIZE, size);
     
-    // add some to the end of char.
+    // add some to the end of char.尾部添加LOG_TAIL
     str_log[size++] = LOG_TAIL;
     
-    // if not to file, to console and return.
+    // if not to file, to console and return. 如果不是输出到文件，输出到控制台并返回
     if (!log_to_file_tank) {
         // if is error msg, then print color msg.
         // \033[31m : red text code in shell
@@ -156,7 +156,7 @@ void SrsFileLog::write_log(int& fd, char *str_log, int size, int level)
         open_log_file();
     }
     
-    // write log to file.
+    // write log to file.   日志写入文件
     if (fd > 0) {
         ::write(fd, str_log, size);
     }
